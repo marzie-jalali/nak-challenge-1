@@ -2,31 +2,35 @@ import styled from "@emotion/styled";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "../store/useAuthStore";
 import { useState } from "react";
 import CustomInput from "../component/shared/CustomInput";
 import CustomButton from "../component/shared/CustomButton";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import useLogin from "../hooks/useLogin";
 
 interface SingInForm {
-  username: string;
+  userName: string;
   password: string;
 }
 
 const SignIn = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { setToken } = useAuthStore();
+  const loginMutation = useLogin();
   const [error, setError] = useState<string>("");
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<SingInForm>({ mode: "onchange" });
+  const { register, handleSubmit } = useForm<SingInForm>({ mode: "onChange" });
 
   const onSubmit = (data: SingInForm) => {
-    console.log(data);
+    setError("");
+    loginMutation.mutate(data, {
+      onSuccess: () => {
+        navigate("/");
+      },
+      onError: (error: Error) => {
+        setError(error.message || "Login failed");
+      },
+    });
   };
 
   return (
@@ -34,7 +38,7 @@ const SignIn = () => {
       <Heading>{t("headings.sign_in")}</Heading>
       <CustomInput
         placeholder={t("labels.username")}
-        {...register("username")}
+        {...register("userName")}
         type="text"
       />
       <CustomInput
@@ -42,15 +46,16 @@ const SignIn = () => {
         {...register("password")}
         type="password"
       />
+      {error && <ErrorMessage>{error}</ErrorMessage>}
       <ButtonContainer>
-        <CustomButton type="submit" onClick={() => navigate("/sign-up")}>
+        <CustomButton type="button" onClick={() => navigate("/sign-up")}>
           {t("labels.sign_up_button")}
         </CustomButton>
         <CustomButton
           padding="10px 32px"
           bg="#000000"
-          type="button"
-          onClick={() => navigate("/")}
+          type="submit"
+          disabled={loginMutation.isPending}
         >
           <FaLongArrowAltRight color="#ffffff" />
         </CustomButton>
@@ -79,4 +84,10 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const ErrorMessage = styled.div`
+  color: #ff4444;
+  font-size: 14px;
+  margin-top: -8px;
 `;
