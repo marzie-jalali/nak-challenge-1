@@ -36,9 +36,9 @@ const CustomButton: React.FC<ButtonProps> = ({
 export default CustomButton;
 
 const Button = styled.button<{ bg?: string; color?: string; padding?: string }>`
-  padding: ${({ padding }) => padding || "10px"};
-  border: 1px solid #000000;
-  border-radius: 50px;
-  background-color: ${({ bg }) => bg || "#ffffff"};
-  color: ${({ color }) => color || "#000000"};
+  padding: ${({ padding }) => padding || "10px 20px"};
+  border: 1px solid #00ebcf;
+  border-radius: 10px;
+  background-color: ${({ bg }) => bg || "#00EBCF"};
+  color: ${({ color }) => color || "#00EBCF"};
 `;

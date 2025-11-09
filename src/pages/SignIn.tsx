@@ -48,16 +48,20 @@ const SignIn = () => {
       />
       {error && <ErrorMessage>{error}</ErrorMessage>}
       <ButtonContainer>
-        <CustomButton type="button" onClick={() => navigate("/sign-up")}>
+        <CustomButton
+          bg="rgba(255, 255, 255, 0.1)"
+          type="button"
+          onClick={() => navigate("/sign-up")}
+        >
           {t("labels.sign_up_button")}
         </CustomButton>
         <CustomButton
-          padding="10px 32px"
-          bg="#000000"
+          // padding="10px 32px"
+          color="#000000"
           type="submit"
           disabled={loginMutation.isPending}
         >
-          <FaLongArrowAltRight color="#ffffff" />
+          submit
         </CustomButton>
       </ButtonContainer>
     </Form>
@@ -78,6 +82,7 @@ const Heading = styled.p`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  color: #00ebcf;
 `;
 
 const ButtonContainer = styled.div`

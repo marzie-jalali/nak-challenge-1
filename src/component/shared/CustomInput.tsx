@@ -25,8 +25,9 @@ export default CustomInput;
 const Input = styled.input`
   width: 100%;
   padding: 10px;
-  border: 1px solid #000000;
-  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
 `;
 const ErrorMessage = styled.p`
   color: #dc362e;
