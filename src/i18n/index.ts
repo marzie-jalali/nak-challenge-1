@@ -24,6 +24,10 @@ i18n.use(initReactI18next).init({
           sign_up_button_success: "Signed Up",
           sign_up_button_error: "Sign Up Failed",
         },
+        toastify: {
+          network_online: "You are back online",
+          network_offline: "You are offline",
+        },
       },
     },
   },

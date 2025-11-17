@@ -6,7 +6,7 @@ import CustomInput from "../component/shared/CustomInput";
 import CustomButton from "../component/shared/CustomButton";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import useSignUp from "../hooks/useSignUp";
-import { signupSchema } from "../features/auth/validation/authSchema";
+import { signupSchema } from "../types/auth/authSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 

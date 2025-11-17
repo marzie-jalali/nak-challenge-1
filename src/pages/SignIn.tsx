@@ -8,7 +8,7 @@ import CustomButton from "../component/shared/CustomButton";
 import useLogin from "../hooks/useLogin";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { signinSchema } from "../features/auth/validation/authSchema";
+import { signinSchema } from "../types/auth/authSchema";
 
 type SignInForm = yup.InferType<typeof signinSchema>;
 
