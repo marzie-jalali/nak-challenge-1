@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import type { InputHTMLAttributes } from "react";
 
 interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
@@ -14,7 +15,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
 }) => {
   return (
     <>
-      <Input placeholder={placeholder} error={error} type={type} {...props} />
+      <Input placeholder={placeholder} type={type} {...props} />
       {error && <ErrorMessage>{error}</ErrorMessage>}
     </>
   );

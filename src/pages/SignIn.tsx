@@ -6,11 +6,11 @@ import { useState } from "react";
 import CustomInput from "../component/shared/CustomInput";
 import CustomButton from "../component/shared/CustomButton";
 import useLogin from "../hooks/useLogin";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { signinSchema } from "../features/auth/validation/authSchema";
 
-interface SingInForm {
-  userName: string;
-  password: string;
-}
+type SignInForm = yup.InferType<typeof signinSchema>;
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -18,9 +18,16 @@ const SignIn = () => {
   const loginMutation = useLogin();
   const [error, setError] = useState<string>("");
 
-  const { register, handleSubmit } = useForm<SingInForm>({ mode: "onChange" });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInForm>({
+    mode: "onChange",
+    resolver: yupResolver(signinSchema),
+  });
 
-  const onSubmit = (data: SingInForm) => {
+  const onSubmit = (data: SignInForm) => {
     setError("");
     loginMutation.mutate(data, {
       onSuccess: () => {
@@ -38,12 +45,14 @@ const SignIn = () => {
       <CustomInput
         placeholder={t("labels.username")}
         {...register("userName")}
+        error={errors.userName?.message}
         type="text"
       />
       <CustomInput
         placeholder={t("labels.password")}
         {...register("password")}
         type="password"
+        error={errors.password?.message}
       />
       {error && <ErrorMessage>{error}</ErrorMessage>}
       <ButtonContainer>

@@ -6,20 +6,26 @@ import CustomInput from "../component/shared/CustomInput";
 import CustomButton from "../component/shared/CustomButton";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import useSignUp from "../hooks/useSignUp";
+import { signupSchema } from "../features/auth/validation/authSchema";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
-interface SingUpForm {
-  firstName: string;
-  lastName: string;
-  userName: string;
-  password: string;
-}
+type SignUpForm = yup.InferType<typeof signupSchema>;
+
 const SignUp = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const signUpMutation = useSignUp();
-  const { register, handleSubmit } = useForm<SingUpForm>({ mode: "onChange" });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpForm>({
+    mode: "onChange",
+    resolver: yupResolver(signupSchema),
+  });
 
-  const onSubmit = (data: SingUpForm) => {
+  const onSubmit = (data: SignUpForm) => {
     signUpMutation.mutate(data, {
       onSuccess: () => {
         navigate("/sign-in");
@@ -38,21 +44,25 @@ const SignUp = () => {
           placeholder={t("labels.first_name")}
           {...register("firstName")}
           type="text"
+          error={errors.firstName?.message}
         />
         <CustomInput
           placeholder={t("labels.last_name")}
           {...register("lastName")}
           type="text"
+          error={errors.lastName?.message}
         />
         <CustomInput
           placeholder={t("labels.user_name")}
           {...register("userName")}
           type="text"
+          error={errors.userName?.message}
         />
         <CustomInput
           placeholder={t("labels.password")}
           {...register("password")}
           type="password"
+          error={errors.password?.message}
         />
         <ButtonContainer>
           <CustomButton
