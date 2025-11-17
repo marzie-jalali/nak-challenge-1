@@ -3,11 +3,10 @@ import useAuthStore from "../store/useAuthStore";
 
 const useLogout = () => {
   const navigate = useNavigate();
-  const { setToken, setUserName } = useAuthStore();
+  const { setAuth } = useAuthStore();
 
   const logout = () => {
-    setToken(null);
-    setUserName(null);
+    setAuth(null, null);
     navigate("/sign-in");
   };
 

@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import CustomInput from "../component/shared/CustomInput";
 import CustomButton from "../component/shared/CustomButton";
-import { FaLongArrowAltRight } from "react-icons/fa";
 import useLogin from "../hooks/useLogin";
 
 interface SingInForm {

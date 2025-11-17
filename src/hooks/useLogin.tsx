@@ -22,14 +22,14 @@ interface LoginResponse {
 }
 
 const useLogin = () => {
-  const { setToken, setUserName } = useAuthStore();
+  const { setAuth } = useAuthStore();
 
   return useMutation<AxiosResponse<LoginResponse>, Error, LoginData>({
     mutationFn: signIn,
     onSuccess: (response: AxiosResponse<LoginResponse>) => {
       const token = response.data.access_token;
-      setToken(token);
-      setUserName(response.data.user.userName);
+      const userName = response.data.user.userName;
+      setAuth(token, userName);
     },
     onError: (error: Error) => {
       console.error("Login failed:", error);
