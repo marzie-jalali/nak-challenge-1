@@ -7,6 +7,7 @@ interface ButtonProps {
   type?: "button" | "submit";
   bg?: string;
   color?: string;
+  border?: string;
   padding?: string;
 }
 
@@ -16,6 +17,7 @@ const CustomButton: React.FC<ButtonProps> = ({
   disabled,
   type,
   bg,
+  border,
   color,
   padding,
 }) => {
@@ -26,6 +28,7 @@ const CustomButton: React.FC<ButtonProps> = ({
       type={type}
       bg={bg}
       color={color}
+      border={border}
       padding={padding}
     >
       {children}
@@ -35,9 +38,14 @@ const CustomButton: React.FC<ButtonProps> = ({
 
 export default CustomButton;
 
-const Button = styled.button<{ bg?: string; color?: string; padding?: string }>`
+const Button = styled.button<{
+  bg?: string;
+  color?: string;
+  padding?: string;
+  border?: string;
+}>`
   padding: ${({ padding }) => padding || "10px 20px"};
-  border: 1px solid #00ebcf;
+  border: 1px solid ${({ border }) => border || "#00ebcf"};
   border-radius: 10px;
   background-color: ${({ bg }) => bg || "#00EBCF"};
   color: ${({ color }) => color || "#00EBCF"};

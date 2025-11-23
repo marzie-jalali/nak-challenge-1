@@ -28,6 +28,10 @@ i18n.use(initReactI18next).init({
           network_online: "You are back online",
           network_offline: "You are offline",
         },
+        users: {
+          info: "Info",
+          posts: "Posts",
+        },
       },
     },
   },

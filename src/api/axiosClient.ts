@@ -6,3 +6,10 @@ export const api = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+export const usersApi = axios.create({
+  baseURL: "https://jsonplaceholder.typicode.com",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});

@@ -1,46 +1,58 @@
-import useAuthStore from "../store/useAuthStore";
-import useLogout from "../hooks/useLogout";
+import type { User } from "../types/user/user";
+import UserList from "../component/users/UserList";
+import useUserList from "../hooks/useUserList";
 import styled from "@emotion/styled";
-import CustomButton from "../component/shared/CustomButton";
 
 const Home = () => {
-  const { userName } = useAuthStore();
-  const { logout } = useLogout();
+  const { data, isLoading } = useUserList();
+  const users = data?.data;
+
+  if (!users || users.length === 0) {
+    return (
+      <Container>
+        <EmptyMessage>No users found</EmptyMessage>
+      </Container>
+    );
+  }
 
   return (
-    <div>
-      {userName && (
-        <HeadingContainer>
-          <h2>Welcome, {userName}! 👋</h2>
-          <CustomButton
-            bg="#ff4444"
-            padding="8px 16px"
-            color="white"
-            onClick={logout}
-          >
-            Logout
-          </CustomButton>
-        </HeadingContainer>
-      )}
-
-      <p>To calm down your mind, you can try:</p>
-      <ul>
-        <li>inhale through your nose for a count of 4</li>
-        <li>hold for 7</li>
-        <li>exhale through your mouth for 8</li>
-      </ul>
-    </div>
+    <Container>
+      <UsersContainer>
+        {isLoading ? (
+          <LoadingMessage>Loading users...</LoadingMessage>
+        ) : (
+          users.map((user: User) => <UserList key={user.id} user={user} />)
+        )}
+      </UsersContainer>
+    </Container>
   );
 };
 
 export default Home;
 
-const HeadingContainer = styled.div`
-  margin-bottom: 20px;
-  padding: 10px;
-  background-color: #f0f0f0;
-  border-radius: 8px;
+const Container = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  padding: 40px;
+  width: 100%;
+  max-width: 700px;
+`;
+
+const UsersContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const LoadingMessage = styled.div`
+  text-align: center;
+  padding: 40px;
+  color: #00ebcf;
+  font-size: 18px;
+`;
+
+const EmptyMessage = styled.div`
+  text-align: center;
+  padding: 40px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 18px;
 `;

@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { signup } from "../api/auth";
+import { signup } from "../api/api";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
